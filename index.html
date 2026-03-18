@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodo Payments — Merchant Review Dashboard</title>
+    <meta name="description" content="Unified Merchant Review Dashboard for Compliance and Risk teams at Dodo Payments">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect width="28" height="28" rx="8" fill="url(#logoGrad)"/>
+                    <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+                            <stop stop-color="#6366f1"/>
+                            <stop offset="1" stop-color="#8b5cf6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <span class="logo-text">Dodo<span class="logo-accent">Pay</span></span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">MAIN</div>
+            <a href="#" class="nav-item active" data-view="queue" id="nav-queue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <span>Review Queue</span>
+                <span class="nav-badge" id="queue-count">12</span>
+            </a>
+            <a href="#" class="nav-item" data-view="review" id="nav-review">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>Merchant Review</span>
+            </a>
+            <a href="#" class="nav-item" data-view="risk" id="nav-risk">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Risk Signals</span>
+            </a>
+
+            <div class="nav-section-label">TRACKING</div>
+            <a href="#" class="nav-item" data-view="audit" id="nav-audit">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span>Audit Trail</span>
+            </a>
+            <a href="#" class="nav-item" data-view="analytics" id="nav-analytics">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Analytics</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-avatar">
+                <span>TA</span>
+            </div>
+            <div class="user-info">
+                <span class="user-name">Tejas A.</span>
+                <span class="user-role">Compliance Lead</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+        <!-- Top Header Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="menu-toggle" id="menu-toggle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <div class="breadcrumb" id="breadcrumb">
+                    <span>Dashboard</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                    <span class="breadcrumb-active">Review Queue</span>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="search-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" placeholder="Search merchants..." id="global-search">
+                </div>
+                <button class="icon-btn notification-btn" id="notification-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span class="notification-dot"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===== VIEW: Review Queue ===== -->
+        <section class="view active" id="view-queue">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-pending">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-pending">12</span>
+                        <span class="stat-label">Pending Review</span>
+                    </div>
+                    <span class="stat-trend stat-trend-up">+3 today</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-progress">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-progress">5</span>
+                        <span class="stat-label">In Progress</span>
+                    </div>
+                    <span class="stat-trend stat-trend-neutral">No change</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-approved">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-approved">34</span>
+                        <span class="stat-label">Approved (30d)</span>
+                    </div>
+                    <span class="stat-trend stat-trend-up">↑ 18%</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-tat">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-tat">18.4h</span>
+                        <span class="stat-label">Avg. TAT</span>
+                    </div>
+                    <span class="stat-trend stat-trend-down">↓ 42%</span>
+                </div>
+            </div>
+
+            <!-- Queue Filters -->
+            <div class="queue-toolbar">
+                <div class="queue-filters">
+                    <button class="filter-chip active" data-filter="all">All <span class="chip-count">12</span></button>
+                    <button class="filter-chip" data-filter="intake">Intake <span class="chip-count">3</span></button>
+                    <button class="filter-chip" data-filter="kyb">KYB <span class="chip-count">4</span></button>
+                    <button class="filter-chip" data-filter="aml">AML/PEP <span class="chip-count">2</span></button>
+                    <button class="filter-chip" data-filter="risk">Risk Review <span class="chip-count">2</span></button>
+                    <button class="filter-chip" data-filter="blocked">Blocked <span class="chip-count">1</span></button>
+                </div>
+                <div class="queue-actions">
+                    <select class="sort-select" id="sort-select">
+                        <option value="sla">Sort by SLA urgency</option>
+                        <option value="date">Sort by date</option>
+                        <option value="risk">Sort by risk tier</option>
+                        <option value="name">Sort by name</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Merchant Queue Table -->
+            <div class="queue-table-wrap">
+                <table class="queue-table" id="queue-table">
+                    <thead>
+                        <tr>
+                            <th>Merchant</th>
+                            <th>Business Type</th>
+                            <th>Current Stage</th>
+                            <th>Risk Tier</th>
+                            <th>SLA Timer</th>
+                            <th>Assigned To</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="queue-tbody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== VIEW: Merchant Review (Consolidated Screen) ===== -->
+        <section class="view" id="view-review">
+            <div class="review-header">
+                <button class="back-btn" id="back-to-queue">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    Back to Queue
+                </button>
+                <div class="review-merchant-info" id="review-merchant-info">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="review-actions-top">
+                    <div class="sla-countdown" id="sla-countdown">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span id="sla-time">06:42:18</span>
+                        <span class="sla-label">remaining</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage Progress Bar -->
+            <div class="stage-progress" id="stage-progress">
+                <div class="stage-step completed" data-stage="intake">
+                    <div class="stage-dot"></div>
+                    <span class="stage-name">Intake</span>
+                </div>
+                <div class="stage-connector completed"></div>
+                <div class="stage-step active" data-stage="kyb">
+                    <div class="stage-dot"></div>
+                    <span class="stage-name">KYB</span>
+                </div>
+                <div class="stage-connector"></div>
+                <div class="stage-step" data-stage="aml">
+                    <div class="stage-dot"></div>
+                    <span class="stage-name">AML / PEP</span>
+                </div>
+                <div class="stage-connector"></div>
+                <div class="stage-step" data-stage="sanctions">
+                    <div class="stage-dot"></div>
+                    <span class="stage-name">Sanctions</span>
+                </div>
+                <div class="stage-connector"></div>
+                <div class="stage-step" data-stage="decision">
+                    <div class="stage-dot"></div>
+                    <span class="stage-name">Decision</span>
+                </div>
+            </div>
+
+            <!-- Review Content Grid -->
+            <div class="review-grid">
+                <!-- Left Column: Merchant Data -->
+                <div class="review-left">
+                    <!-- Business Profile Card -->
+                    <div class="review-card" id="card-profile">
+                        <div class="card-header">
+                            <h3>Business Profile</h3>
+                            <span class="card-badge badge-synced">Auto-synced</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="profile-grid" id="profile-grid">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KYB Documents Card -->
+                    <div class="review-card" id="card-kyb">
+                        <div class="card-header">
+                            <h3>KYB Documents</h3>
+                            <span class="card-badge badge-synced">Auto-synced</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="doc-list" id="doc-list">
+                                <!-- Populated by JS -->
+                            </div>
+                            <button class="btn btn-outline btn-sm" id="request-docs-btn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                Request Additional Docs
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AML / PEP / Sanctions Card -->
+                    <div class="review-card" id="card-aml">
+                        <div class="card-header">
+                            <h3>AML / PEP / Sanctions</h3>
+                            <span class="card-badge badge-synced">Auto-synced</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="check-results" id="check-results">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Snapshot -->
+                    <div class="review-card" id="card-transactions">
+                        <div class="card-header">
+                            <h3>Transaction Snapshot</h3>
+                            <span class="card-badge badge-live">Live</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="txn-stats" id="txn-stats">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Actions & Notes -->
+                <div class="review-right">
+                    <!-- Risk Signals Summary -->
+                    <div class="review-card card-risk" id="card-risk-summary">
+                        <div class="card-header">
+                            <h3>Risk Signals</h3>
+                            <button class="btn-link" id="view-full-risk">View Full Panel →</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="risk-score-ring" id="risk-score-ring">
+                                <svg viewBox="0 0 120 120" class="risk-ring-svg">
+                                    <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+                                    <circle cx="60" cy="60" r="52" fill="none" stroke="url(#riskGrad)" stroke-width="10" stroke-dasharray="327" stroke-dashoffset="98" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                                    <defs>
+                                        <linearGradient id="riskGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#22c55e"/>
+                                            <stop offset="100%" stop-color="#f59e0b"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="risk-score-value">
+                                    <span class="risk-number" id="risk-number">32</span>
+                                    <span class="risk-label">/ 100</span>
+                                </div>
+                            </div>
+                            <div class="risk-signals-mini" id="risk-signals-mini">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notes & Flags -->
+                    <div class="review-card" id="card-notes">
+                        <div class="card-header">
+                            <h3>Notes & Flags</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="notes-list" id="notes-list">
+                                <!-- Populated by JS -->
+                            </div>
+                            <div class="note-input-wrap">
+                                <textarea class="note-input" id="note-input" placeholder="Add a note or flag..." rows="2"></textarea>
+                                <div class="note-actions">
+                                    <label class="flag-toggle">
+                                        <input type="checkbox" id="flag-toggle">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                                        Flag
+                                    </label>
+                                    <button class="btn btn-sm btn-primary" id="add-note-btn">Add Note</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stage Decision -->
+                    <div class="review-card card-decision" id="card-decision">
+                        <div class="card-header">
+                            <h3>Stage Decision</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="decision-buttons">
+                                <button class="btn btn-success btn-decision" id="btn-complete-stage">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    Complete Stage
+                                </button>
+                                <button class="btn btn-warning btn-decision" id="btn-request-info">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                    Request Info
+                                </button>
+                                <button class="btn btn-danger btn-decision" id="btn-escalate">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Escalate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini Audit Trail -->
+                    <div class="review-card" id="card-mini-audit">
+                        <div class="card-header">
+                            <h3>Recent Activity</h3>
+                            <button class="btn-link" id="view-full-audit">View Full Trail →</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="mini-audit-list" id="mini-audit-list">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== VIEW: Risk Signals ===== -->
+        <section class="view" id="view-risk">
+            <div class="view-header">
+                <h2>Risk Signals Panel</h2>
+                <p class="view-subtitle">Centralized risk intelligence for merchant assessment</p>
+            </div>
+
+            <div class="risk-overview-grid" id="risk-overview-grid">
+                <!-- Risk score large display -->
+                <div class="risk-main-card">
+                    <div class="risk-main-score" id="risk-main-score">
+                        <div class="risk-gauge">
+                            <svg viewBox="0 0 200 120" class="gauge-svg">
+                                <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
+                                <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="170" id="gauge-fill"/>
+                                <defs>
+                                    <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#22c55e"/>
+                                        <stop offset="50%" stop-color="#f59e0b"/>
+                                        <stop offset="100%" stop-color="#ef4444"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="gauge-value">
+                                <span class="gauge-number" id="gauge-number">32</span>
+                                <span class="gauge-max">/ 100</span>
+                            </div>
+                            <span class="gauge-label" id="gauge-label">Low Risk</span>
+                        </div>
+                    </div>
+                    <div class="risk-tier-selector">
+                        <h4>Assign Risk Tier</h4>
+                        <div class="tier-options" id="tier-options">
+                            <button class="tier-btn tier-low active" data-tier="low">Low</button>
+                            <button class="tier-btn tier-medium" data-tier="medium">Medium</button>
+                            <button class="tier-btn tier-high" data-tier="high">High</button>
+                            <button class="tier-btn tier-critical" data-tier="critical">Critical</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signal Cards -->
+                <div class="risk-signals-grid" id="risk-signals-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Detailed Risk Variables Breakdown -->
+            <div class="risk-detail-sections" id="risk-detail-sections">
+                <!-- Populated by JS — shows granular variable tables per signal category -->
+            </div>
+
+            <!-- Risk Decision Panel -->
+            <div class="risk-decision-panel" id="risk-decision-panel">
+                <h3>Final Assessment</h3>
+                <div class="risk-decision-row">
+                    <textarea class="risk-notes" id="risk-notes" placeholder="Risk assessment notes..." rows="3"></textarea>
+                    <div class="risk-decision-buttons">
+                        <button class="btn btn-success btn-lg" id="risk-approve">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Approve
+                        </button>
+                        <button class="btn btn-warning btn-lg" id="risk-monitor">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            High-Risk Monitor
+                        </button>
+                        <button class="btn btn-danger btn-lg" id="risk-reject">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                            Reject
+                        </button>
+                        <button class="btn btn-outline btn-lg" id="risk-escalate">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+                            Escalate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== VIEW: Audit Trail ===== -->
+        <section class="view" id="view-audit">
+            <div class="view-header">
+                <h2>Audit Trail</h2>
+                <p class="view-subtitle">Complete history of actions, decisions, and stage transitions</p>
+            </div>
+
+            <div class="audit-filters">
+                <button class="filter-chip active" data-audit-filter="all">All Events</button>
+                <button class="filter-chip" data-audit-filter="stage">Stage Changes</button>
+                <button class="filter-chip" data-audit-filter="decision">Decisions</button>
+                <button class="filter-chip" data-audit-filter="note">Notes</button>
+                <button class="filter-chip" data-audit-filter="system">System</button>
+            </div>
+
+            <div class="audit-timeline" id="audit-timeline">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- ===== VIEW: Analytics ===== -->
+        <section class="view" id="view-analytics">
+            <div class="view-header">
+                <h2>Analytics & Metrics</h2>
+                <p class="view-subtitle">Operational performance tracking — TAT, SLA compliance, and review efficiency</p>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card analytics-card-wide">
+                    <h3>TAT Trend (Last 30 Days)</h3>
+                    <div class="chart-container" id="tat-chart">
+                        <!-- SVG chart rendered by JS -->
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <h3>Stage Bottleneck Analysis</h3>
+                    <div class="bottleneck-bars" id="bottleneck-bars">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <h3>Review Volume</h3>
+                    <div class="volume-stats" id="volume-stats">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Doc Request Modal -->
+    <div class="modal-overlay" id="doc-modal-overlay">
+        <div class="modal" id="doc-modal">
+            <div class="modal-header">
+                <h3>Request Additional Documents</h3>
+                <button class="modal-close" id="doc-modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Document Type Required</label>
+                    <select class="form-select" id="doc-type-select">
+                        <option value="">Select document type...</option>
+                        <option value="incorporation">Certificate of Incorporation</option>
+                        <option value="address">Proof of Address</option>
+                        <option value="identity">Director ID Verification</option>
+                        <option value="bank">Bank Statement (3 months)</option>
+                        <option value="license">Business License</option>
+                        <option value="tax">Tax Registration Certificate</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message to Merchant</label>
+                    <textarea class="form-textarea" id="doc-message" rows="4" placeholder="Explain what is needed and why..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Re-queue to Stage</label>
+                    <select class="form-select" id="requeue-stage">
+                        <option value="intake">Intake</option>
+                        <option value="kyb">KYB Verification</option>
+                        <option value="aml">AML / PEP Check</option>
+                    </select>
+                </div>
+                <div class="form-info">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    An email will be sent to the merchant's registered email and the review will be re-queued to the selected stage.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="doc-modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="doc-modal-send">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Send Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
